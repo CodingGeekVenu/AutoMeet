@@ -57,7 +57,7 @@
 - View, copy, download, or share the summary directly from the extension.
 - Summaries and action items are automatically sent to Slack.
 
-*Technologies Used*
+**Technologies Used**
 
    - Frontend: HTML, CSS, JavaScript (Chrome Extension)
    - Backend: Python (Flask, Whisper, Ollama, Slack SDK)
