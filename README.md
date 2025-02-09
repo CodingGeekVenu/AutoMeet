@@ -33,8 +33,8 @@
 
       - Set up environment variables in a .env file:
 
-         SLACK_API_TOKEN= *your_slack_token*
-         SLACK_CHANNEL_ID= *your_channel_id*
+         - SLACK_API_TOKEN= *your_slack_token*
+         - SLACK_CHANNEL_ID= *your_channel_id*
 
       -  Run the backend server:
 
