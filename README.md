@@ -24,12 +24,13 @@
 
       - Clone this repository:
 
-         git clone https://github.com/CodingGeekVenu/AutoMeet.git
-         cd AutoMeet
+             git clone https://github.com/CodingGeekVenu/AutoMeet.git
+        
+             cd AutoMeet
 
       - Install dependencies:
 
-         pip install -r requirements.txt
+            pip install -r requirements.txt
 
       - Set up environment variables in a .env file:
 
@@ -38,9 +39,9 @@
 
       -  Run the backend server:
 
-         python run.py
+             python run.py
 
-        (The backend should now be running at http://127.0.0.1:5000/)
+   (The backend should now be running at http://127.0.0.1:5000/)
 
 2. Chrome Extension Setup
 
