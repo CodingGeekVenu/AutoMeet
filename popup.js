@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Theme Toggle
     const themeToggle = document.getElementById('themeToggle');
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    
+
     // Set initial theme
     if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && prefersDark)) {
         document.documentElement.setAttribute('data-theme', 'dark');
@@ -21,11 +21,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     tabs.forEach(tab => {
         tab.addEventListener('click', () => {
-            // Remove active class from all tabs and contents
             tabs.forEach(t => t.classList.remove('active'));
             tabContents.forEach(c => c.classList.remove('active'));
 
-            // Add active class to clicked tab and corresponding content
             tab.classList.add('active');
             const contentId = tab.getAttribute('data-tab');
             document.getElementById(contentId).classList.add('active');
@@ -37,10 +35,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const recordStatus = recordButton.nextElementSibling;
     let isRecording = false;
 
-    recordButton.addEventListener('click', () => {
+    recordButton.addEventListener('click', async () => {
         isRecording = !isRecording;
         recordButton.classList.toggle('recording');
         recordStatus.textContent = isRecording ? 'Recording in progress...' : 'Start recording';
+
+        if (!isRecording) {
+            chrome.runtime.sendMessage({ action: "startTranscription" }, (response) => {
+                alert(response.message);
+            });
+        }
     });
 
     // Summarize Button
@@ -50,13 +54,19 @@ document.addEventListener('DOMContentLoaded', () => {
     summarizeButton.addEventListener('click', async () => {
         summarizeButton.disabled = true;
         summarizeButton.textContent = 'Summarizing...';
-        
+
         try {
-            // Simulate API call
-            await new Promise(resolve => setTimeout(resolve, 2000));
-            textarea.value = "This is an AI-generated summary of your meeting. It covers key points discussed, action items, and decisions made during the session.";
+            const response = await fetch('http://127.0.0.1:5000/summary');
+            const data = await response.json();
+
+            if (data.summary) {
+                textarea.value = data.summary;
+            } else {
+                textarea.value = "No summary available.";
+            }
         } catch (error) {
-            console.error('Failed to generate summary');
+            console.error('Failed to fetch summary:', error);
+            textarea.value = "Error fetching summary.";
         } finally {
             summarizeButton.disabled = false;
             summarizeButton.textContent = 'Summarize Meeting';
