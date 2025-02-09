@@ -19,10 +19,10 @@ def transcribe_audio(audio_file):
         sys.exit(1)
 
     print("Transcribing meeting audio...")
-    model = whisper.load_model("base")  # Options: "tiny", "small", "medium", "large"
+    model = whisper.load_model("base")
     
     try:
-        result = model.transcribe(audio_file, fp16=False)  # Avoids FP16 warnings
+        result = model.transcribe(audio_file, fp16=False)
         return result["text"]
     except Exception as e:
         print(f"Error in transcription: {e}")
